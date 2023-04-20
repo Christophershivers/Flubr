@@ -1,0 +1,58 @@
+﻿@model List<ViewFollowersViewModel>
+
+    <style>
+    .card-size {
+        position: relative;
+        width: 100%;
+        padding-bottom: 100%; /* Sets the height equal to width (for square images) */
+        overflow: hidden;
+    }
+
+    .card-img-top {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100% !important;
+        height: 100%;
+        object-fit: cover; /* Ensures the image fills the container */
+    }
+    .user-name {
+        margin-top: 10px; /* Adjust the margin as needed */
+    }
+</style>
+
+    <section class="d-none d-lg-block">
+        <div class="card">
+            <div class="card-body">
+                <a href="" class="text-reset d-inline-block">
+                    <h5 class="card-title mt-1 mb-4">
+                        <strong>Followers</strong>
+                        <small class="text-muted">@ViewBag.following</small>
+                    </h5>
+                </a>
+
+                <a class="btn btn-link btn-lg py-1 px-3 float-end d-inline-block" href="#" role="button">See All
+                    Friends</a>
+                <div class="row text-center">
+                    @foreach(var followers in Model){
+                    
+                            
+                                    <div class="col-4 mb-2">
+                                        <div class="card-size">
+                                            <a href="" class="text-reset">
+                                            <img src="@followers.ProfileImage"
+                                                class=" rounded shadow-1-strong mb-1 card-img-top"  alt="" />
+
+                                            
+                                        </a>
+                                        </div>
+                                        <p class="user-name"><small>@followers.FirstName @followers.LastName</small></p>
+                                    </div>
+                            
+
+
+                    }
+                </div>  
+            </div>
+        </div>
+    </section>

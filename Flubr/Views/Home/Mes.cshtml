@@ -1,0 +1,10 @@
+﻿@model List<MessagesModel>
+
+    @foreach(var message in Model){
+    
+        <p>@message.MessageId</p>
+        <p>@message.MessageName</p>
+        <p style="margin-bottom: 5px">@message.RecentDate</p>
+    
+    
+    }

@@ -1,0 +1,276 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Flubr.Areas.Identity.Data
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+
+
+    <style>
+        .list-group-naked .list-group-item {
+            background-color: transparent;
+            border: none;
+        }
+
+        .list-group-item-action:focus,
+        .list-group-item-action:hover {
+            background-color: #eeeeee;
+
+
+
+        }
+
+        .right{
+            text-align: right; 
+            margin-right: 45px; 
+            margin-bottom: 15px;
+        }
+
+        .left{
+            text-align: left; 
+            margin-left: 45px; 
+            margin-bottom: 15px;
+        }
+    </style>
+
+
+<body>
+    
+      <!--Main Navigation-->
+      
+      <!--Main layout-->
+      <main class="mb-5">
+        <div class="container-fluid">
+          <div class="row justify-content-center justify-content-lg-between">
+            <!-- Left column -->
+            <div class="col-xl-2 col-lg-4 d-none d-xl-block">
+              <!--Section: Contacts-->
+              <section class="sticky-top" style="top: 80px">
+                <div class="list-group list-group-naked mb-3">
+                  <div class="d-flex justify-content-between">
+                    <hp class="ms-3 mt-2 mb-4"><strong>Your contacts</strong></hp>
+                  </div>
+                  @await Component.InvokeAsync("MessageThread")
+                </div>
+              </section>
+              <!--Section: Contacts-->
+            </div>
+            <!-- Left column -->
+      
+            <!-- Center column -->
+            <div class="col-xl-10 col-lg-8 col-md-12 mb-4 mb-lg-0  border-right">
+              <!--Section: Messages-->
+              <section class="inner-content">
+                <div class="d-flex mt-3">
+                  <button data-mdb-toggle="sidenav" data-mdb-target="#sidenav-1"
+                    class="btn shadow-0 p-0 me-3 d-block d-lg-none" aria-controls="#sidenav-1" aria-haspopup="false">
+                    <i class="fas fa-bars fa-lg"></i>
+                  </button>
+                    
+
+                  <!--<img src="https://mdbootstrap.com/img/new/avatars/9.jpg" class="rounded-circle me-2"
+                    style="width: 30px; height: 30px" alt="" />-->
+      
+                  <span>@ViewBag.messageName</span>
+                </div>
+      
+                <hr />
+                  <ul >
+                       <div id="messageTable1">
+
+                    </div>
+                  </ul>
+                   
+                
+              </section>
+              <!--Section: Messages-->
+      
+              <!--Section: Message input-->
+              <section id="message-input" class="fixed-bottom card bg-light">
+                <div class="card-body">
+                  <form class="d-flex" method ="post" asp-controller="Messages" asp-action="Open">
+                    <div class="w-100 mx-2">
+                      <textarea class="form-control" placeholder="Type your message" id="chatMessage"></textarea>
+                    </div>
+      
+                    <button type="submit" class="btn btn-primary px-3" id="sendMessage">
+                      Send
+                    </button>
+                  </form>
+                </div>
+              </section>
+              <!--Section: Message input-->
+            </div>
+            <!-- Center column -->
+      
+            
+          </div>
+        </div>
+      </main>
+    
+      <!--Main layout-->
+      
+     <!-- Sidenav -->
+        <nav
+        id="sidenav-1"
+        class="sidenav"
+        data-mdb-hidden="true"
+        >
+            <ul class="sidenav-menu">
+          
+                @await Component.InvokeAsync("MessageThreadSideNav")
+          
+            </ul>
+        </nav>
+    <!-- Sidenav -->
+
+
+      <!--Footer-->
+      <footer></footer>
+      <!--Footer-->
+    
+
+
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.js"></script>
+</body>
+
+
+
+   @section Scripts{
+    
+        
+            <script>
+
+
+                const connection = new signalR.HubConnectionBuilder().withUrl("/SignalHub").build();
+
+                $(function () {
+                    connection.start().then(function () {
+                        //alert('@UserManager.GetUserAsync(User).Result.Id');
+                        let connectionId = connection.connectionId;
+                        console.log(connection)
+                        var url = window.location.href;
+                        var id = url.split('/').pop();
+
+                        connection.send("AddGroup", connectionId, id);
+                        InvokePriMess(id);
+                    }).catch(function (err) {
+                        return console.error(err.toString());
+                    });
+                });
+
+                function InvokePriMess(value) {
+
+                    connection.invoke("PrivateMessage", value).catch(function (err) {
+
+                        return console.log(err.toString());
+                    });
+                }
+
+                connection.on("PriMess", function (privateMessages, context) {
+
+                    
+                    GetTheMessages(privateMessages);
+
+                });
+
+
+
+                document.getElementById("sendMessage").addEventListener("click", function (event) {
+
+                
+                    var message = document.getElementById("chatMessage").value;
+
+                    var url = window.location.href;
+                    var param = url.split('/').pop();
+                    connection.send("Send", message, param);
+                    //connection.invoke("GetMessage", param);
+                    event.preventDefault();
+
+
+
+                })
+
+
+                function GetTheMessages(mess) {
+
+
+                    var chatDiv = document.getElementById("chat");
+                    //var verticlePos = chatDiv.offsetHeight;
+                    //window.scrollTo(0, verticlePos);
+
+                    //chatDiv.scrollTo(100, 500);
+                    if (!mess) {
+
+                        return;
+                    }
+
+                    $('#messageTable1').empty();
+
+                    var pl = '';
+
+                    const list = document.getElementById("messageTable1");
+
+                    $.each(mess, function (index, mess) {
+
+                        const date = new Date(mess.date);
+
+                        const formattedDate = date.toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric',
+                            hour: 'numeric',
+                            minute: 'numeric',
+                            hour12: true
+
+                        })
+
+                        if (mess.id == '@UserManager.GetUserAsync(User).Result.Id') {
+
+                            pl += `
+                                   <div class="d-flex justify-content-end ms-auto">
+                                        <p class="p-3 bg-primary shadow-1-strong text-white rounded-3" style="max-width: 533px; margin-bottom: 2px">
+                                            ${mess.message}
+                                            <small class="float-end mt-4"></small>
+                                        </p>
+                                        <img src="${mess.profileImage}" class="rounded-circle ms-2"
+                                        style="width: 30px; height: 30px" alt="" />
+                                    </div>
+                                    <div class="right">${formattedDate}</div>
+
+
+                                `
+
+                        
+
+                        } else {
+                            pl += `
+                                   <div class="d-flex justify-content-start w-100">
+                                        <img src="${mess.profileImage}" class="rounded-circle me-2"
+                                        style="width: 30px; height: 30px" alt="" />
+                                        <p class="p-3 bg-light rounded-3 shadow-1" style="max-width: 533px; margin-bottom: 2px">
+                                            ${mess.message}
+                                            <small class="float-end text-dark mt-4"></small>
+                                        </p>
+                                    </div>
+                                    <div class="left">${formattedDate}</div>
+
+
+                                `
+                        
+                        }
+
+                                   });
+                    $("#messageTable1").html(pl);
+                
+                
+                }
+            </script>
+            
+        
+    }

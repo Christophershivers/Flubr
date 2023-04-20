@@ -1,0 +1,58 @@
+﻿@model List<ViewUserCommentsModel>
+
+    <style>
+        .rounded-circle{
+        object-fit: cover;
+        object-position: center;
+        height: 40px;
+        width: 40px;
+        }
+    </style>
+    @foreach(var comments in Model){
+    
+        <section class="container ">
+            <div class="card border-style border-top">
+                <div class="card-body" style="padding-bottom: 0px; margin-bottom: 0px;">
+                    <!-- Data -->
+                    <div class="d-flex mb-3">
+                        <a href="">
+                            <img src="@comments.ProfileImage" class="border rounded-circle me-2"
+                                alt="" style="height: 40px" />
+                        </a>
+                        <div>
+                            <a href="" class="text-dark mb-0">
+                                <strong>@comments.FirstName @comments.LastName</strong>
+                            </a>
+                            <a href="" class="text-muted d-block" style="margin-top: -6px">
+                                <small>@comments.UserName</small>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Description -->
+                    <div>
+                        <p style="margin-bottom: 0px;">
+                            @comments.Comment
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Interactions -->
+                <div class="card-body">
+                    <!-- Reactions -->
+                    <div class="d-flex justify-content-between mb-3">
+                        <div>
+                            <form  method="post"  class="inline-form " asp-controller="Post" asp-action="AddLikeComment" asp-route-id="@comments.CommentId">
+                                <button type="submit" class="transparent-button">
+                                    <i class="fas fa-thumbs-up text-primary"></i>
+                                    <span>@comments.Likes</span>
+                                </button>
+                            </form>
+                        </div>
+                        <div>@comments.Date</div>
+                    </div>
+                </div>
+                <!-- Interactions -->
+            </div>
+
+        </section>
+}

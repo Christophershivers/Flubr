@@ -1,0 +1,111 @@
+﻿@model PostUserModel
+
+
+<section class="container">
+        <div class="card ">
+          <div class="card-body">
+            <!-- Data -->
+            <div class="d-flex mb-3">
+              <a href="">
+                <img src="@Model.ProfileImage" class="border rounded-circle me-2"
+                  alt="" style="height: 40px" />
+              </a>
+              <div>
+                <a href="" class="text-dark mb-0">
+                  <strong>@Model.FirstName @Model.LastName</strong>
+                </a>
+                <a href="" class="text-muted d-block" style="margin-top: -6px">
+                  <small>@Model.UserName</small>
+                </a>
+              </div>
+            </div>
+            <!-- Description -->
+            <div>
+              <p>
+                 @Model.Post
+              </p>
+            </div>
+          </div>
+         
+          <!-- Interactions -->
+          <div class="card-body">
+            <!-- Reactions -->
+            <div class="d-flex justify-content-between mb-3">
+              <div>
+                  <form  method="post"  class="inline-form " asp-controller="Post" asp-action="AddLikePost" asp-route-id="@Model.PostId">
+                    <button type="submit" class="transparent-button">
+                      <i class="fas fa-thumbs-up text-primary"></i>
+                      <span>@Model.Likes</span>
+                    </button>
+                   </form>
+              </div>
+              <div> @Model.Date</div>
+              <div>
+                <button class="transparent-button" data-mdb-toggle="modal" data-mdb-target="#modalPost">
+                  <i class="fa-regular fa-comment-dots"></i>
+                </button>
+          </div>
+            </div>
+          </div>
+          <!-- Interactions -->
+        </div>
+      </section>
+      @await Component.InvokeAsync("Comment", new { id = @Model.PostId })
+
+<form method="post" asp-controller="Post" asp-action="Comments">
+  <div class="modal fade" id="modalPost" tabindex="-1" aria-labelledby="modalPostLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <section>
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex mb-3">
+                      <a href="">
+                        <img src="@Model.ProfileImage" class="border rounded-circle me-2"
+                          alt="" style="height: 40px" />
+                      </a>
+                      <div>
+                        <a href="" class="text-dark mb-0">
+                          <strong>@Model.FirstName @Model.LastName</strong>
+                        </a>
+                        <a href="" class="text-muted d-block" style="margin-top: -6px">
+                          <small>@Model.UserName</small>
+                        </a>
+                      </div>
+                    </div>
+                    <div>
+                      <p>
+                        @Model.Post
+                      </p>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+             
+                    </div>
+                    <div class="border-top"></div>
+                    <div class="d-flex mb-3 mt-3">
+                      <a >
+                        <img src="@ViewBag.ProfileImage" class="border rounded-circle me-2"
+                          alt="" style="height: 40px" />
+                      </a>
+                      <div class="form-outline w-100">
+                        <textarea class="form-control" id="textAreaExample" rows="2" asp-for="@Model.Comment"></textarea>
+                        <label class="form-label" for="textAreaExample">Write a comment</label>
+                      </div>
+              
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" type="submit">Reply to post</button>
+                      </div>
+                  </div>
+                </div>
+                <input value="@Model.PostId" asp-for="@Model.PostId"  type="hidden"/>
+              </section>
+        </div>
+        
+    </div>
+  </div>
+</form>
+
+    
