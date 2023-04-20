@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Flubr.Models.UserPostModel>
+
+@{
+    ViewData["Title"] = "RealTime";
+}
+
+<h1>RealTime</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Post)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Likes)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="post">
+    </tbody>
+</table>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        setInterval(function () {
+            $.ajax({
+                type: "GET",
+                url: "/Home/GetRealTime",
+                success: function (post) {
+                    $("#post").empty();
+                    $.each(post, function (i, post) {
+                        var tr = "<tr>";
+                        tr += "<td>" + post.Id + "</td>";
+                        tr += "<td>" + post.Post + "</td>";
+                        tr += "<td>" + post.Date + "</td>";
+                        tr += "<td>" + post.Likes + "</td>";
+                        $("#post").append(tr);
+                    });
+                }
+            });
+        }, 1000);
+           
+    });
+</script>

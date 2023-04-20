@@ -1,0 +1,313 @@
+﻿
+@model AccountViewModel
+@using Microsoft.AspNetCore.Identity
+@using Flubr.Areas.Identity.Data
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+
+
+
+<div class="container-sm text-center" style="padding-top: 40px; border: solid 1px red">
+        <div class="row align-items-start">
+            <div class="col-3"  >
+               
+               
+
+          
+            
+            
+            
+            </div>
+
+
+
+            <div class="col-6" align="left" s>
+                
+                
+                
+                <!---profile-->
+                @ViewBag.change
+                <div class="profileblock" style="padding-bottom: 0px; box-shadow: 5px 1px 10px #888888; background-color: #fafafa;">
+            
+                    <div class="profilebanner" style="box-shadow: 5px 1px 10px #888888; padding-bottom: 358px; background-image: url(~/wwwroot/morgan.png); background-size: 636px;">
+                    
+                        
+                    
+                    </div>
+    
+                    <img src="@Model.AU.ProfileImage" alt="" style="border-radius: 100%; position: relative; right: 0px; bottom:40px; box-shadow: 1px 1px 10px #151515; border: 2px solid rgb(255, 255, 255);" width="70px" height="70px" >
+                    @if(@Model.AU.Id == UserManager.GetUserAsync(User).Result.Id){}else{@if(ViewBag.follow == false){<form method ="post" asp-controller="Profile" asp-action="AddFollow" asp-route-id="@Model.AU.Id"> <button type="submit" class="btn btn-primary"style="float: right;   text-align: left;"> follow</button></form>}else{<form method ="post" asp-controller="Profile" asp-action="AddFollow" asp-route-id="@Model.AU.Id"> <button type="submit" class="btn btn-danger"style="float: right;   text-align: left;"> following</button></form>}}
+                    @if(@Model.AU.Id == UserManager.GetUserAsync(User).Result.Id){<button type="submit" class="btn btn-primary"style="float: right;" data-toggle="modal" data-target="#EditAccount"> Edit Account</button>}else{}
+                    <h5 style="position: relative; bottom: 35px; left: 10px; text-align: left;">@Model.AU.FirstName @Model.AU.LastName</h5>@if(@Model.AU.Id == UserManager.GetUserAsync(User).Result.Id){}else{<a asp-controller="Profile" asp-action="AddMessage" asp-route-id="@Model.AU.Id" data-toggle="modal" data-target="#addMessage" > <span class="material-symbols-outlined">mail</span></a>}
+                    <p style="position: relative; bottom: 45px; left: 10px; text-align: left; font-size: .7em;">@@@Model.AU.UserName</p>
+                    <p style="position: relative; bottom: 45px; left: 10px; float: left; font-size: .7em;">Followers: @ViewBag.followers</p>
+                    <p style="position: relative; bottom: 45px; right: 10px; text-align: right; font-size: .7em; float: ">Following: @ViewBag.following</p>
+                    <p style="position: relative; bottom: 45px;  right: 19px; font-size: .7em; text-align: justify; padding-left: 30px; padding-right: 5px;">@Model.AU.ProfileDescript</p>
+                    <p style="position: relative; bottom: 13px; left: 10px; float: left; font-size: .7em;  "></p>
+                    <p style="position: relative; bottom: 13px; left: 200px; float: center; font-size: .7em;  ">@Model.AU.Location</p>     
+                    <p style="position: relative; bottom: 45px; right: 10px; float: right; font-size: .7em;  ">@Model.AU.Birthday</p>              
+                
+                </div>
+                <!---profile-->
+                
+                
+                
+                
+                
+                <!--user post tweet start-->
+                 
+                
+                
+                
+                @if(@Model.AU.Id == UserManager.GetUserAsync(User).Result.Id){
+                    <form method ="post" asp-controller="Profile" asp-action="Account" >
+                        <div class="contain" align="center" style="padding: 10px; padding-top: 5px; padding-bottom: 0px; border: 1px solid #CDCDCD;  box-shadow: 5px 1px 10px #888888;">
+                            <div class="input-group mb-3" style="margin-top:10px;">
+                                <input type="text" class="form-control" asp-for="@Model.PM2.Post" placeholder="Say something....."aria-label="Recipient's username" aria-describedby="button-addon2">
+                                <button class="btn " type="submit" id="button-addon2" style="background-color: #1976d2; color: white;">Button</button>
+                            </div>
+                        </div>
+                    </form>
+                }else{
+                
+                
+                
+                
+                }
+             <!--user post tweet end-->
+
+             <!--user post start-->
+             @foreach(var item in Model.PM){
+                
+                            <div class="contain" style="padding: 30px; padding-top: 10px; padding-bottom: 50px; margin-top: 10px; border: 1px solid #CDCDCD; box-shadow: 5px 1px 10px #888888; ">
+                                 <img src="@Model.AU.ProfileImage" alt="Girl in a jacket" width="55" height="55" style="margin-left: -15px; margin-right: 10px; border-radius: 50%; float: left;">
+                                 <div class=" comment" style="text-indent: 0px; text-indent: 0px;">
+                                    <h8 style="text-align: left; "><strong>@Model.AU.FirstName @Model.AU.LastName</strong> @@@Model.AU.UserName</h8>
+                                    <br />
+                                    <p1 style=" overflow:hidden;"> <small> @item.Post </small></p1>
+                                 </div>
+                                 <div class="icons" style="margin-bottom: -40px; padding-top: 20px; text-align: center;">
+                                    <i class="bi bi-chat-right-text" style="margin-right: 150px;"></i>
+                                    <i class="fa-solid fa-retweet" style="margin-right: 150px"></i>
+                                    <i class="fa-solid fa-heart" style="margin-right: 50px;"></i>
+                                </div>
+                             </div>
+                
+                }
+             <!--user post end-->
+            </div>
+
+
+
+
+            <div class="col-3"  >
+                
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade" id="addMessage" tabindex="-1" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addMessageLabel">New message to  @Model.AU.FirstName</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" ></button>
+      </div>
+      <form method="post" asp-controller="Profile" asp-action="AddMessage" asp-route-id="@Model.AU.Id">
+        <div class="modal-body">
+        
+          <div class="form-group">
+            <label asp-for="@Model.AU.Id" class="col-form-label">Recipient:</label>
+            <input asp-for="@Model.AU.Id" type="text" class="form-control" id="recipient-name" value="@Model.AU.Id">
+            <span asp-validation-for="@Model.AU.Id" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="@UserManager.GetUserAsync(User).Result.Id" class="col-form-label">User:</label>
+            <input asp-for="@UserManager.GetUserAsync(User).Result.Id" type="text" class="form-control" id="curent-name">
+            <span asp-validation-for="@UserManager.GetUserAsync(User).Result.Id" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="@Model.MM.MessageName" class="col-form-label">Message Name:</label>
+            <input asp-for="@Model.MM.MessageName" type="text" class="form-control" id="messageName">
+            <span  asp-validation-for="@Model.MM.MessageName" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="@Model.UM.Message" class="col-form-label">Message:</label>
+            <textarea asp-for="@Model.UM.Message" class="form-control" id="message-text"></textarea>
+            <span asp-validation-for="@Model.UM.Message" class="text-danger"></span>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" >Send message</button>
+          </div>
+        
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="modal fade" id="EditAccount" tabindex="-1" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addMessageLabel">Edit Account of @Model.AU.FirstName</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" ></button>
+      </div>
+      <form method="post" enctype="multipart/form-data" asp-controller="Profile" asp-action="EditAccount" asp-route-id="@Model.AU.Id">
+        <div class="modal-body">
+        
+          <div class="form-group">
+            
+            <input type="hidden" asp-for="@Model.AU.Id"  class="form-control" id="recipient-name" value="@Model.AU.Id">
+            <span type="hidden" asp-validation-for="@Model.AU.Id" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="@Model.AU.UserName" class="col-form-label">User name:</label>
+            <input asp-for="@Model.AU.UserName" type="text" class="form-control" id="curent-name">
+            <span asp-validation-for="@Model.AU.UserName" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="@Model.AU.FirstName" class="col-form-label">First name:</label>
+            <input asp-for="@Model.AU.FirstName" type="text" class="form-control" id="curent-name">
+            <span asp-validation-for="@Model.AU.FirstName" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="@Model.AU.LastName" class="col-form-label">Last Name:</label>
+            <input asp-for="@Model.AU.LastName" type="text" class="form-control" id="messageName">
+            <span  asp-validation-for="@Model.AU.LastName" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="@Model.AU.Birthday" class="col-form-label">Birthday:</label>
+            <input asp-for="@Model.AU.Birthday" class="form-control" id="message-text"></input>
+            <span asp-validation-for="@Model.AU.Birthday" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="@Model.AU.Location" class="col-form-label">Location:</label>
+            <input asp-for="@Model.AU.Location" class="form-control" id="message-text"></input>
+            <span asp-validation-for="@Model.AU.Location" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="@Model.AU.ProfileDescript" class="col-form-label">Profile Description:</label>
+            <TextArea asp-for="@Model.AU.ProfileDescript" class="form-control" id="message-text"></TextArea>
+            <span asp-validation-for="@Model.AU.ProfileDescript" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="@Model.Picture" class="col-form-label">Profile Picture:</label>
+            <input asp-for="@Model.Picture" class="form-control" id="message-text"></input>
+            <span asp-validation-for="@Model.Picture" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <input type="hidden" asp-for="@Model.AU.Email" class="form-control" ></input>
+            <span type="hidden" asp-validation-for="@Model.AU.Email" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <input type="hidden" asp-for="@Model.AU.PasswordHash" class="form-control" ></input>
+            <span type="hidden" asp-validation-for="@Model.AU.PasswordHash" class="text-danger"></span>
+          </div>
+           <div class="form-group">
+            <input type="hidden" asp-for="@Model.AU.SecurityStamp" class="form-control" ></input>
+            <span type="hidden" asp-validation-for="@Model.AU.SecurityStamp" class="text-danger"></span>
+          </div>
+           <div class="form-group">
+            <input type="hidden" asp-for="@Model.AU.ConcurrencyStamp" class="form-control" ></input>
+            <span type="hidden" asp-validation-for="@Model.AU.ConcurrencyStamp" class="text-danger"></span>
+          </div>
+           <div class="form-group">
+            <input type="hidden" asp-for="@Model.AU.LockoutEnabled" class="form-control" ></input>
+            <span type="hidden" asp-validation-for="@Model.AU.LockoutEnabled" class="text-danger"></span>
+          </div>
+           <div class="form-group">
+            <input type="hidden" asp-for="@Model.AU.AccessFailedCount" class="form-control" ></input>
+            <span type="hidden" asp-validation-for="@Model.AU.AccessFailedCount" class="text-danger"></span>
+          </div>
+           <div class="form-group">
+            <input type="hidden" asp-for="@Model.AU.NormalizedEmail" class="form-control" ></input>
+            <span type="hidden" asp-validation-for="@Model.AU.NormalizedEmail" class="text-danger"></span>
+          </div>
+           <div class="form-group">
+            <input type="hidden" asp-for="@Model.AU.NormalizedUserName" class="form-control" ></input>
+            <span type="hidden" asp-validation-for="@Model.AU.NormalizedUserName" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <input type="hidden" asp-for="@Model.AU.EmailConfirmed" class="form-control" ></input>
+            <span type="hidden" asp-validation-for="@Model.AU.EmailConfirmed" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <input type="hidden" asp-for="@Model.AU.ProfileImage" class="form-control" ></input>
+            <span type="hidden" asp-validation-for="@Model.AU.ProfileImage" class="text-danger"></span>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" >Update Account</button>
+          </div>
+        
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+    @section Scripts {
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/databaseHub")
+            .build();
+
+        connection.on("DatabaseChanged", (message) => {
+            alert(message)
+            console.log(message)
+        });
+
+        connection.start().catch((err) => console.error(err.toString()));
+    </script>
+}
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    

@@ -1,0 +1,38 @@
+﻿@import url("https://fonts.googleapis.com/css2?family=Poppins:weight@100;200;300;400;500;600;700;800&display=swap");
+
+.blue{
+    width: 30em;
+    height: 30em;
+}
+
+
+
+.search {
+    position: relative;
+    box-shadow: 0 0 40px rgba(51, 51, 51, .1);
+}
+
+    .search input {
+        height: 40px;
+        text-indent: 20px;
+        border: 2px solid #d6d4d4;
+        width: 1300px;
+        
+        transition: all .5s ease;
+    }
+
+
+        .search input:focus {
+            box-shadow: none;
+            border: 2px solid blue;
+            width: 1400px;
+        }
+
+    .search .fa-search {
+        position: absolute;
+        top: 12px;
+        left: 20px;
+    }
+.btn{
+    background-color: transparent;
+}

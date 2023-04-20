@@ -1,0 +1,202 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Flubr.Areas.Identity.Data
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="~/js/Messages.css"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+    <ul>
+        @foreach(var id in ViewBag.id){
+        <li>@id</li>
+    
+    }
+    </ul>
+    
+    <div id="container">
+        <aside>
+            <header>
+                
+            </header>
+            <ul>
+               
+            </ul>
+        </aside>
+        <main>
+            <header>
+                
+                <div>
+                    
+                </div>
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_star.png" alt="">
+            </header>
+            <ul id="chat" >   
+                <div id="messageTable">
+
+                </div>
+
+            </ul>
+            <footer>
+                <form method ="post" asp-controller="Messages" asp-action="Open" >
+                    <textarea  placeholder="Type your message" id="chatMessage"></textarea>
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_picture.png" alt="">
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_file.png" alt="">
+                    <button type="submit" class="btn" style="float: right;" id="sendMessage">Send</button>
+                </form>
+            </footer>
+        </main>
+    </div>
+    
+</body>
+
+</html>
+
+   @section Scripts{
+    
+        
+            <script>
+
+
+                const connection = new signalR.HubConnectionBuilder().withUrl("/SignalHub").build();
+
+                $(function () {
+                    connection.start().then(function () {
+                        //alert('@UserManager.GetUserAsync(User).Result.Id');
+                        let connectionId = connection.connectionId;
+                        console.log(connection)
+                        var url = window.location.href;
+                        var id = url.split('/').pop();
+
+                        connection.send("AddGroup", connectionId, id);
+                        InvokePriMess(id);
+                    }).catch(function (err) {
+                        return console.error(err.toString());
+                    });
+                });
+
+                function InvokePriMess(value) {
+
+                    connection.invoke("PrivateMessage", value).catch(function (err) {
+
+                        return console.log(err.toString());
+                    });
+                }
+
+                connection.on("PriMess", function (privateMessages, context) {
+
+                    
+                    GetTheMessages(privateMessages);
+
+                });
+
+
+
+                document.getElementById("sendMessage").addEventListener("click", function (event) {
+
+                
+                    var message = document.getElementById("chatMessage").value;
+
+                    var url = window.location.href;
+                    var param = url.split('/').pop();
+                    connection.send("Send", message, param);
+                    //connection.invoke("GetMessage", param);
+                    event.preventDefault();
+
+
+
+                })
+
+
+                function GetTheMessages(mess) {
+
+
+                    var chatDiv = document.getElementById("chat");
+                    var verticlePos = chatDiv.offsetHeight;
+                    window.scrollTo(0, verticlePos);
+
+                    chatDiv.scrollTo(100, 500);
+                    if (!mess) {
+
+                        return;
+                    }
+
+                    $('#messageTable').empty();
+
+                    var pl = '';
+
+                    const list = document.getElementById("messageTable");
+
+                    $.each(mess, function (index, mess) {
+
+                        if (mess.id == '@UserManager.GetUserAsync(User).Result.Id') {
+
+                            pl += `
+                                   <li class="me">
+                                        <div class="entete">
+                                            <span class="status green"></span>
+                                            <h2>${mess.firstName}</h2>
+                                            <h3>${mess.date.toString("MM-dd-yyyy")}</h3>
+                                        </div>
+                                        <div class="triangle"></div>
+                                        <div class="message">
+                                            ${mess.message}
+                                        </div>
+                                    </li>
+
+
+                                `
+
+                        
+
+                        } else {
+                            pl += `
+                                   <li class="you">
+                                        <div class="entete">
+                                            <span class="status green"></span>
+                                            <h2>${mess.firstName}</h2>
+                                            <h3>${mess.date}</h3>
+                                        </div>
+                                        <div class="triangle"></div>
+                                        <div class="message">
+                                            ${mess.message}
+                                        </div>
+                                    </li>
+
+
+                                `
+                        
+                        }
+
+                                   });
+                    $("#messageTable").html(pl);
+                
+                
+                }
+            </script>
+            
+        
+    }

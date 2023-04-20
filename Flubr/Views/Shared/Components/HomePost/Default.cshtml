@@ -1,0 +1,11 @@
+﻿@model UserPostModel
+
+
+<form method="post" asp-for="Components/HomePost" asp-action="InvokeAsync">
+    <div class="contain" align="center" style="padding: 10px; padding-top: 5px; padding-bottom: 0px; border: 1px solid #CDCDCD;  box-shadow: 5px 1px 10px #888888;">
+        <div class="input-group mb-3" style="margin-top:10px;">
+            <input type="text" asp-for="@Model.Post" class="form-control" placeholder="Say something....." aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button class="btn " type="Submit" id="button-addon2" style="background-color: #FF7E25; color: white;">Button</button>
+        </div>
+    </div>
+</form>

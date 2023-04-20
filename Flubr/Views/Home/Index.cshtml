@@ -1,0 +1,136 @@
+﻿@model List<PostUserModel>
+
+<style>
+
+    img{
+        border-radius: 50%;
+        float: left;
+    }
+</style>
+<div class="container text-center" style="padding-top: 40px;">
+        <div class="row align-items-start">
+            <div class="col-3" >
+                <div class="leftcontainer" style="padding-bottom: 100px;">
+                    <div class="weathercontainer"
+                        style="padding-bottom: 0px; box-shadow: 5px 1px 10px #888888; background-image: url(cumulus-clouds.jpg);">
+                        <div class="weatherblock" style="background-color:rgba(0, 0, 0, 0.242); padding-bottom: 50px;">
+                            <h4 style="color: white;">Today</h4>
+                            <h4 style="color: white;">TUES</h4>
+                            </br>
+                            <i class="fa-solid fa-cloud-sun fa-5x" style="color: white;"></i>
+                            </br>
+                            </br>
+                            <h2 style="background-color: rgba(255, 0, 0, 0.546); color: white;">56°</h2>
+
+
+
+
+                        </div>
+
+                    </div>
+                    <div class="sportsteamname" style="box-shadow: 5px 1px 10px #888888; padding-bottom: 5px; margin-top: 10px; background-color: #d21928; text-align: left; border-radius: 15px 15px 0px 0px;">
+                        <img src="bulls.svg" alt="bulls" width: 60 height="60">
+                        <h4 style="color: white;">BULLS</h4>
+                        <p5 style="color: white; top: -12px; position: relative; ">7th in Eastern Conference</h5>
+                    </div>
+                    <div class="sportsteam" style="box-shadow: 5px 1px 10px #888888; ">
+                        <div class="opposingteam" style="position: relative; ">
+                            <img src="76ers.svg" alt="" width="60" height="60" style="margin-top: 10px; position: relative; left: 24px;">
+                            <p style="position: relative; top: 65px; right: 130px;">76ers</p>
+                            <p style="position: relative; top: 45px; right: 130px">(2-4)</p>
+                            <img src="bulls.svg" alt="" width: 100px height="90px" style="position: relative; bottom: 85px; left: 200px;">
+                            <p style="position: relative; bottom: 15px; left: 48px;">Bulls</p>
+                            <p style="position: relative; bottom: 35px; left: 48px">(3-3)</p>
+                            <p style="position: relative; bottom: 80px; right: 45px">at</p>
+                            <h2 style="position: relative; bottom: 180px; right: 45px; margin-bottom: -100px">114</h2>
+                            <h2 style="position: relative; bottom: 119px; left: -10px">109</h2>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-6" align="left" style=" text-align: left; ">
+                <!--user post tweet start-->
+                
+                <!--user post tweet end-->
+                <h5>@User.Identity.Name</h5>
+                <!--user post start-->
+                
+                
+                @if(User?.Identity.IsAuthenticated ==true){
+                    
+                
+                               <div id="homePost"></div>
+                
+                
+                    
+
+                }else{
+                
+                
+                
+                }
+                <!--user post end-->
+            </div>
+            
+
+
+
+
+
+
+
+
+
+            <div class="col-3" >
+                <div class="news" style="background-color: #f7f9f9; padding-bottom: 20px; text-align: center; border: 1px solid #d3d3d3;  padding-left: 5px; border-radius: 15px 15px 0px 0px; ">
+                    <h3 style="position: relative; top: 10px;">What's the news</h3>
+                    
+                </div>
+                <div class="news" style="background-color: #f7f9f9; padding-bottom: 20px; text-align: left; border: 1px solid #d3d3d3;  padding-left: 5px;">
+                    <img src="plastic.jfif" alt="" width="80px" height="85px" style="float: right; border-radius: 15%; margin-right: 6px; margin-left: auto; ">
+                    <h6>Plastic recycling is a ‘myth,’</h6>
+                    <p>The environmental nonprofit Greenpeace USA says its new analysis provides more proof...</p>
+                </div>
+                <div class="news" style="background-color: #f7f9f9; padding-bottom: 20px; text-align: left; border: 1px solid #d3d3d3;  padding-left: 5px; ;">
+                    <img src="mars.jfif" alt="" width="80px" height="85px" style="float: right; border-radius: 15%; margin-right: 6px; margin-left: auto; ">
+                    <h6>Traces of an ancient ocean have been discovered</h6>
+                    <p>Scientists have long debated whether Mars was once home to an ocean....</p>
+                </div>
+                <div class="news" style="background-color: #f7f9f9; padding-bottom: 20px; text-align: left; border: 1px solid #d3d3d3;  padding-left: 5px; ">
+                    <img src="morgan.png" alt="" width="80px" height="85px" style="float: right; border-radius: 15%; margin-right: 6px; margin-left: auto; ">
+                    <h6>JPMorgan Chase wants to disrupt the rent check </h6>
+                    <p>The bank is piloting a platform it created for property owners and managers that....</p>
+                </div>
+                <div class="news" style="background-color: #f7f9f9; padding-bottom: 20px; text-align: left; border: 1px solid #d3d3d3; padding-left: 5px; ">
+                    <img src="illinois.jfif" alt="" width="80px" height="85px" style="float: right; border-radius: 15%; margin-right: 6px; margin-left: auto; ">
+                    <h6>Illinois: Election news and updates</h6>
+                    <p>The latest news, updates and information on the 2022 midterm elections from local.... </p>
+                </div>
+                <div class="news" style="background-color: #f7f9f9; padding-bottom: 20px; text-align: left; border: 1px solid #d3d3d3;  padding-left: 5px; ">
+                    <img src="health.jfif" alt="" width="80px" height="85px" style="float: right; border-radius: 15%; margin-right: 6px; margin-left: auto; ">
+                    <h6>Americans are buying ketamine online to treat mental-health</h6>
+                    <p>Startups are prescribing ketamine online to treat serious mental-health conditions.... </p>
+                </div>
+                <div class="news" style="background-color: #f7f9f9; padding-bottom: 20px; text-align: left; border: 1px solid #d3d3d3;  padding-left: 5px; ">
+                    <img src="baseball.jfif" alt="" width="80px" height="85px" style="float: right; border-radius: 15%; margin-right: 6px; margin-left: auto; ">
+                    <h6>World Series Game 3: Phillies vs. Astros postponed to Nov. 1</h6>
+                    <p>Game 3 of the 2022 World Series has been pushed back to Tuesday, Nov. 1 due to rain.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+  
+    
+    @section Scripts{
+    
+            <scripts>
+                <script src="~/js/HomeRealTimePost.js"></script>
+                
+            </scripts>
+    
+    
+    
+    }
