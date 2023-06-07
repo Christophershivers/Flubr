@@ -162,12 +162,12 @@
                                           <a href="" class="text-muted small ms-3 me-2"><strong>Like</strong></a>
                                           <a href="" class="text-muted small me-2"><strong>Reply</strong></a>
                                         </div>
-                                      </div>
+                                   </div>
 
                                       <!-- Answers -->
 
                                       <!-- Comments -->
-                                    </div>
+                                   </div>
                                     <!--Interactions -->
                                   </div >
 

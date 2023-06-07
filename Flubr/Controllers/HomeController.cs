@@ -130,7 +130,7 @@ namespace Flubr.Controllers
         {
             var val1 = User?.Identity.IsAuthenticated;
 
-            
+
 
             if (val1 == true)
             {

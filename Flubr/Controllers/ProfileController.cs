@@ -38,7 +38,7 @@ namespace Flubr.Controllers
             //ViewBag.userId = id;
 
             //this is for the sql broker to listen for database changes
-
+                
             //await _hubContext.Clients.All.SendAsync("DatabaseChanged", "it changed");
             //ViewBag.change = "hey";
             //var i = 0;
@@ -48,9 +48,12 @@ namespace Flubr.Controllers
             //listener.TableChanged += async (o, e) => {
             //    await _hubContext.Clients.All.SendAsync("DatabaseChanged", "it changed");
 
-                
 
 
+                Console.WriteLine("it changed");
+
+            };
+            listener.Start();
 
             //    Console.WriteLine("it changed");
 
@@ -77,7 +80,7 @@ namespace Flubr.Controllers
             AVM.PM = post;
             var howManyFollowing = _FC.Followers.Where(o => o.UserId == id && o.UserId != o.FollowingId).Count();
             var howManyFollowers = _FC.Followers.Where(o => o.FollowingId == id).Count();
-            
+
 
             ViewBag.following = howManyFollowing;
             ViewBag.followers = howManyFollowers;
@@ -164,7 +167,15 @@ namespace Flubr.Controllers
             _FC.SaveChanges();
 
 
-            
+            //receipient message
+            AVM.UM.MessageId = randomString;
+            AVM.UM.Date = DateTime.Now;
+            AVM.UM.Message = "";
+            AVM.UM.Id = id;
+            AVM.UM.UserMessageId = g;
+            _FC.UserMessage.Add(AVM.UM);
+            _FC.SaveChanges();
+
 
 
 
@@ -264,6 +275,6 @@ namespace Flubr.Controllers
 
             return RedirectToAction("Account", new { id = findUserPost.Id });
 
-        }
     }
+}
 }

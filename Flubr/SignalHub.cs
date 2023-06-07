@@ -66,7 +66,7 @@ namespace Flubr
         {
             var user = await _UM.GetUserAsync(_httpContextAccessor.HttpContext.User);
             if (user != null)
-            {
+        {
                 ConnectedUsers.Ids.Add(user.Id);
             }
             await  base.OnDisconnectedAsync(exception);
@@ -74,7 +74,7 @@ namespace Flubr
 
         public async Task Send(string message, string url )
         {
-
+           
 
             var changeMessageDate = _FC.Message.SingleOrDefault(m => m.MessageId == url);
 

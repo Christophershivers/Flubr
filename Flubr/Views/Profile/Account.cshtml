@@ -6,7 +6,16 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
 
     <style>
     form.inline-form {
@@ -20,8 +29,11 @@
 </style>
 
 
-
-
+<div class="container-sm text-center" style="padding-top: 40px; border: solid 1px red">
+        <div class="row align-items-start">
+            <div class="col-3"  >
+               
+               
 <!--Main layout-->
   <main class="mb-5">
     <!-- Section: White background -->
@@ -33,7 +45,7 @@
                 background-image: url('https://mdbootstrap.com/img/new/slides/297.jpg');
                 height: 400px;
               "></div>
-  
+
           <div class="d-flex justify-content-center">
                 <div class="rounded-circle overflow-hidden shadow-3-strong position-absolute" style="width: 168px; height: 168px; margin-top: -140px">
                         <img src="@Model.AU.ProfileImage" class="w-100 h-100 object-fit-cover" alt="" />
@@ -41,13 +53,13 @@
         </div>
         </section>
         <!-- Section: Images -->
-  
+          
         <!-- Section: User data -->
         <section class="text-center border-bottom">
           <div class="row d-flex justify-content-center">
             <div class="col-lg-6">
               <h2><strong>@Model.AU.FirstName @Model.AU.LastName</strong></h2>
-  
+            
               <p class="text-muted">
                 @Model.AU.ProfileDescript
               </p>
@@ -55,7 +67,7 @@
           </div>
         </section>
         <!-- Section: User data -->
-  
+            
         <!-- Section: Buttons -->
         <section class="d-flex justify-content-between align-items-center py-3">
           <!-- Left -->
@@ -66,9 +78,9 @@
             <button type="button" class="btn btn-link btn-lg text-reset px-3" data-mdb-ripple-color="dark">
               Following <small class="text-muted">@ViewBag.following</small>
             </button>
-          </div>
+            </div>
           <!-- Left -->
-  
+
           <!-- Right -->
           <div class=" d-lg-block">
             @if(@Model.AU.Id == UserManager.GetUserAsync(User).Result.Id)
@@ -76,22 +88,23 @@
                         <button type="button" class="btn btn-light bg-light px-3 me-2 border-bottom" data-mdb-ripple-color="dark" data-toggle="modal" data-target="#EditAccount"> <i class="fas fa-edit me-2"></i>Edit profile</button>
                     }else
                     {
-                    
+
                     }
 
-
+            <div class="col-6" align="left" s>
+                
            @if(@Model.AU.Id == UserManager.GetUserAsync(User).Result.Id)
                     {
-                    
+                
                     }
                     else
                     {
                         <button class="btn btn-dark" asp-controller="Profile" asp-action="AddMessage" asp-route-id="@Model.AU.Id" data-toggle="modal" data-target="#addMessage" > <i class="bi bi-envelope-fill"></i></button>
                     }
-
+                
            @if(@Model.AU.Id == UserManager.GetUserAsync(User).Result.Id)
                     {
-                    
+            
                     }else
                     {
                         @if(ViewBag.follow == false)
@@ -100,7 +113,7 @@
                                      <button type="submit" class="btn btn-light bg-light px-3 me-2" data-mdb-ripple-color="dark">
                                          Follow
                                      </button>
-
+                    
                                 </form>
                             }
                             else
@@ -109,24 +122,36 @@
                                            <button type="submit" class="btn btn-danger px-3 me-2" data-mdb-ripple-color="dark">
                                                Following
                                            </button>
-
+                        
                                     </form>
                                 }
                     }
-
-
-
+                    
+                    </div>
+    
+                    <img src="@Model.AU.ProfileImage" alt="" style="border-radius: 100%; position: relative; right: 0px; bottom:40px; box-shadow: 1px 1px 10px #151515; border: 2px solid rgb(255, 255, 255);" width="70px" height="70px" >
+                    @if(@Model.AU.Id == UserManager.GetUserAsync(User).Result.Id){}else{@if(ViewBag.follow == false){<form method ="post" asp-controller="Profile" asp-action="AddFollow" asp-route-id="@Model.AU.Id"> <button type="submit" class="btn btn-primary"style="float: right;   text-align: left;"> follow</button></form>}else{<form method ="post" asp-controller="Profile" asp-action="AddFollow" asp-route-id="@Model.AU.Id"> <button type="submit" class="btn btn-danger"style="float: right;   text-align: left;"> following</button></form>}}
+                    @if(@Model.AU.Id == UserManager.GetUserAsync(User).Result.Id){<button type="submit" class="btn btn-primary"style="float: right;" data-toggle="modal" data-target="#EditAccount"> Edit Account</button>}else{}
+                    <h5 style="position: relative; bottom: 35px; left: 10px; text-align: left;">@Model.AU.FirstName @Model.AU.LastName</h5>@if(@Model.AU.Id == UserManager.GetUserAsync(User).Result.Id){}else{<a asp-controller="Profile" asp-action="AddMessage" asp-route-id="@Model.AU.Id" data-toggle="modal" data-target="#addMessage" > <span class="material-symbols-outlined">mail</span></a>}
+                    <p style="position: relative; bottom: 45px; left: 10px; text-align: left; font-size: .7em;">@@@Model.AU.UserName</p>
+                    <p style="position: relative; bottom: 45px; left: 10px; float: left; font-size: .7em;">Followers: @ViewBag.followers</p>
+                    <p style="position: relative; bottom: 45px; right: 10px; text-align: right; font-size: .7em; float: ">Following: @ViewBag.following</p>
+                    <p style="position: relative; bottom: 45px;  right: 19px; font-size: .7em; text-align: justify; padding-left: 30px; padding-right: 5px;">@Model.AU.ProfileDescript</p>
+                    <p style="position: relative; bottom: 13px; left: 10px; float: left; font-size: .7em;  "></p>
+                    <p style="position: relative; bottom: 13px; left: 200px; float: center; font-size: .7em;  ">@Model.AU.Location</p>     
+                    <p style="position: relative; bottom: 45px; right: 10px; float: right; font-size: .7em;  ">@Model.AU.Birthday</p>              
+                
 
 
             
-          </div>
+                </div>
           <!-- Right -->
         </section>
         <!-- Section: Buttons -->
       </div>
     </section>
     <!-- Section: White background -->
-  
+                
     <!-- Section: Grey background -->
     <section>
       <div class="container">
@@ -137,7 +162,7 @@
               <div class="card">
                 <div class="card-body">
                   <h5 class="card-title mt-1 mb-4"><strong>Intro</strong></h5>
-  
+                
                   <ul class="list-unstyled text-muted">
                     <li><i class="bi bi-balloon-fill me-3 mb-3"></i>Birthday @Model.AU.Birthday</li>
                     <li><i class="bi bi-calendar-date-fill me-3 mb-3"></i>Joined Aug 6</li>
@@ -148,22 +173,23 @@
                     <li class="d-lg-none d-lg-block"><i class="bi bi-people-fill me-3 mb-3"></i>Following by <a class="text-reset font-weight-bold"
                         href="">9254 people</a></li>
                   </ul>
-  
-                  
-  
-                  
+                
+                
+                
+                <!--user post tweet start-->
+                 
                 </div>
               </div>
             </section>
             <!-- Section: Intro -->
-  
-           
-  
+                
+                
+                
             <!-- Section: Friends -->
             @await Component.InvokeAsync("Followers", new { id = @Model.AU.Id, followers = @ViewBag.followers })
             @await Component.InvokeAsync("Following", new { id = @Model.AU.Id, following = @ViewBag.following })
             <!-- Section: Friends -->
-          </div>
+                            </div>
   
           <div class="col-md-7 mb-4 mb-md-0">
             <!--Section: Create post-->
@@ -175,21 +201,21 @@
                     <a href="">
                       <div class="rounded-circle overflow-hidden border" style="width: 40px; height: 40px;">
                           <img src="@Model.AU.ProfileImage" class="w-100 h-100 object-fit-cover" alt="" />
-                      </div>
+                        </div>
                     </a>
-  
+                
                     <button type="button" class="btn btn-light btn-block btn-rounded bg-light ml-2"
                       data-mdb-ripple-color="dark" data-mdb-toggle="modal" data-mdb-target="#modalPost">
                       What's on your mind?
                     </button>
                   </div>
-                 
-                  
+                
+                
                 </div>
               </div>
-  
+                
               <!-- Card -->
-  
+
               <!-- modalPost-->
               <form method ="post" asp-controller="Profile" asp-action="Account" >
                   <div class="modal fade" id="modalPost" tabindex="-1" aria-labelledby="modalPostLabel" aria-hidden="true">
@@ -207,7 +233,7 @@
                             <textarea class="form-control" id="form4Example3" asp-for="@Model.PM2.Post" rows="4"></textarea>
                             <label class="form-label" for="form4Example3">Message</label>
                           </div>
-  
+                
                           <div class="d-flex justify-content-between">
                             <strong>Add to the post</strong>
                           </div>
@@ -217,14 +243,18 @@
                             Post
                           </button>
                         </div>
-                      </div>
-                    </div>
-                  </div>
+                                 </div>
+                                 <div class="icons" style="margin-bottom: -40px; padding-top: 20px; text-align: center;">
+                                    <i class="bi bi-chat-right-text" style="margin-right: 150px;"></i>
+                                    <i class="fa-solid fa-retweet" style="margin-right: 150px"></i>
+                                    <i class="fa-solid fa-heart" style="margin-right: 50px;"></i>
+                                </div>
+                             </div>
               </form>
               <!-- modalPost-->
             </section>
             <!--Section: Create post-->
-  
+                
             <!--Section: Newsfeed-->
             <section>
                 @foreach(var item in Model.PM){
@@ -252,8 +282,8 @@
                                                            @item.Post
                                                           </p>
                                                         </div>
-                                                      </div>
-         
+            </div>
+
                                                       <!-- Interactions -->
                                                       <div class="card-body">
                                                         <!-- Reactions -->
@@ -265,8 +295,8 @@
                                                                     <span>@item.Likes</span>
                                                                   </button>
                                                               </form>
-                                            
-                                                          </div>
+                
+            </div>
                                                           <div> Aug 6, 2023 4:53pm</div>
                                                           <div>
                                                             <a  asp-controller="Post" asp-action="Comments" asp-route-id="@item.PostId" class="text-muted"> comments </a>
@@ -281,7 +311,7 @@
             <!--Section: Newsfeed-->
           </div>
         </div>
-      </div>
+    </div>
     </section>
     <!-- Section: Grey background -->
   </main>
@@ -443,17 +473,34 @@
 </div>
 
 
-   
+    @section Scripts {
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/databaseHub")
+            .build();
+
+        connection.on("DatabaseChanged", (message) => {
+            alert(message)
+            console.log(message)
+        });
+
+        connection.start().catch((err) => console.error(err.toString()));
+    </script>
+}
+</body>
+</html>
 
 
 
 
 
- 
 
 
 
-   
+
+
+
 
 
 

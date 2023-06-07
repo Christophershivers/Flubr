@@ -98,7 +98,7 @@
 
 
 @if(User?.Identity.IsAuthenticated == true){
-            <div class="container text-center" style="padding-top: 40px;">
+<div class="container text-center" style="padding-top: 40px;">
         <div class="row align-items-start">
             <div class="col-3 d-none d-lg-block" >
                 <div class="leftcontainer" style="padding-bottom: 100px;">
@@ -176,7 +176,7 @@
                                                           </p>
                                                         </div>
                                                       </div>
-         
+                    
                                                       <!-- Interactions -->
                                                       <div class="card-body">
                                                         <!-- Reactions -->
@@ -188,7 +188,7 @@
                                                                     <span>@userpost.Likes</span>
                                                                   </button>
                                                               </form>
-                                            
+                
                                                           </div>
                                                           <div> Aug 6, 2023 4:53pm</div>
                                                           <div>
@@ -199,11 +199,12 @@
                                                       <!-- Interactions -->
                                                     </div>
                                                   </section>
+                
+                
+                    
 
-
-
-
-                                
+                }else{
+                
                 
                 
                 }
@@ -217,12 +218,16 @@
 
 
 
-                                                  
 
 
 
 
 
+
+            <div class="col-3" >
+                <div class="news" style="background-color: #f7f9f9; padding-bottom: 20px; text-align: center; border: 1px solid #d3d3d3;  padding-left: 5px; border-radius: 15px 15px 0px 0px; ">
+                    <h3 style="position: relative; top: 10px;">What's the news</h3>
+                    
             <div class="col-3 d-none d-lg-block" >
                 <div class="list-group list-group-flush mb-4 ">
                     <h5 class="d-flex align-items-center list-group-item mb-0 py-3" aria-current="true">
@@ -253,23 +258,27 @@
                     <a href="#" class="list-group-item list-group-item-action py-3 link-primary">
                       Show more
                     </a>
-                  </div>
+                </div>
             </div>
         </div>
     </div>
-    
-    
+
+
     
     
     }else{
-    
+  
             <div class="video-container">
         <video src="~/media/flubr.mp4" autoplay loop muted></video>
         <a class="btn btn-primary btn-lg centered-button" asp-area="" asp-controller="Identity" asp-action="Account" asp-route-id="Register">Signup!</a>
       </div>
     
+    @section Scripts{
     
-    
+            <scripts>
+                <script src="~/js/HomeRealTimePost.js"></script>
+                
+            </scripts>
     
     
     

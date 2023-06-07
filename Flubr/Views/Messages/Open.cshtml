@@ -5,7 +5,15 @@
 @inject UserManager<ApplicationUser> UserManager
 
 
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="~/js/Messages.css"/>
 
     <style>
         .list-group-naked .list-group-item {
@@ -36,9 +44,9 @@
 
 
 <body>
-    
+
       <!--Main Navigation-->
-      
+
       <!--Main layout-->
       <main class="mb-5">
         <div class="container-fluid">
@@ -57,7 +65,7 @@
               <!--Section: Contacts-->
             </div>
             <!-- Left column -->
-      
+
             <!-- Center column -->
             <div class="col-xl-10 col-lg-8 col-md-12 mb-4 mb-lg-0  border-right">
               <!--Section: Messages-->
@@ -67,11 +75,12 @@
                     class="btn shadow-0 p-0 me-3 d-block d-lg-none" aria-controls="#sidenav-1" aria-haspopup="false">
                     <i class="fas fa-bars fa-lg"></i>
                   </button>
-                    
+
+</head>
 
                   <!--<img src="https://mdbootstrap.com/img/new/avatars/9.jpg" class="rounded-circle me-2"
                     style="width: 30px; height: 30px" alt="" />-->
-      
+    
                   <span>@ViewBag.messageName</span>
                 </div>
       
@@ -80,12 +89,15 @@
                        <div id="messageTable1">
 
                     </div>
-                  </ul>
-                   
+    </ul>
+    
+    <div id="container">
+        <aside>
+            <header>
                 
               </section>
               <!--Section: Messages-->
-      
+               
               <!--Section: Message input-->
               <section id="message-input" class="fixed-bottom card bg-light">
                 <div class="card-body">
@@ -93,7 +105,7 @@
                     <div class="w-100 mx-2">
                       <textarea class="form-control" placeholder="Type your message" id="chatMessage"></textarea>
                     </div>
-      
+                
                     <button type="submit" class="btn btn-primary px-3" id="sendMessage">
                       Send
                     </button>
@@ -104,8 +116,8 @@
             </div>
             <!-- Center column -->
       
-            
-          </div>
+                    
+                </div>
         </div>
       </main>
     
@@ -118,9 +130,9 @@
         data-mdb-hidden="true"
         >
             <ul class="sidenav-menu">
-          
+
                 @await Component.InvokeAsync("MessageThreadSideNav")
-          
+
             </ul>
         </nav>
     <!-- Sidenav -->
@@ -135,7 +147,7 @@
 
 
 
-
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.js"></script>
 </body>
 
@@ -240,7 +252,7 @@
                                         </p>
                                         <img src="${mess.profileImage}" class="rounded-circle ms-2"
                                         style="width: 30px; height: 30px" alt="" />
-                                    </div>
+                                        </div>
                                     <div class="right">${formattedDate}</div>
 
 
@@ -257,7 +269,7 @@
                                             ${mess.message}
                                             <small class="float-end text-dark mt-4"></small>
                                         </p>
-                                    </div>
+                                        </div>
                                     <div class="left">${formattedDate}</div>
 
 
